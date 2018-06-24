@@ -83,7 +83,7 @@ class Network(object):
     
     def train(self):
         epochs = self.args['epoch']
-        test_loaders = self.data_loader.test_loaders
+        valid_loaders = self.data_loader.valid_loaders
         train_loaders = self.data_loader.train_loaders
         print_every = 10
         steps = 0 
@@ -117,7 +117,7 @@ class Network(object):
                     accuracy = 0
                     test_loss = 0
                     
-                    for images, labels in iter(test_loaders):
+                    for images, labels in iter(valid_loaders):
 
                         with torch.no_grad():
                             images, labels = Variable(images), Variable(labels)
@@ -138,8 +138,8 @@ class Network(object):
                           "Steps: {},".format(steps),
                           "Elapsed: {:.3f} secs,".format(elapsed_time),
                           "Training Loss: {:.3f},".format(running_loss/print_every),
-                          "Test Loss: {:.3f},".format(test_loss/len(test_loaders)),
-                          "Test Accuracy: {:.3f}".format(accuracy/len(test_loaders)))
+                          "Test Loss: {:.3f},".format(test_loss/len(valid_loaders)),
+                          "Test Accuracy: {:.3f}".format(accuracy/len(valid_loaders)))
         
                     running_loss = 0
                     self.model.train()
@@ -179,13 +179,24 @@ class DataLoader(object):
         self.test_dir = data_dir + '/' + args['test_dir']
 
         train_transforms = self.define_train_transform()
+        valid_transforms = self.define_valid_transform()
         test_transforms = self.define_test_transform()
 
         self.train_datasets = datasets.ImageFolder(self.train_dir, transform=train_transforms)
+        self.valid_datasets = datasets.ImageFolder(self.test_dir, transform=valid_transforms)
         self.test_datasets = datasets.ImageFolder(self.test_dir, transform=test_transforms)
 
         self.train_loaders = torch.utils.data.DataLoader(self.train_datasets, batch_size=56,shuffle=True)
-        self.test_loaders = torch.utils.data.DataLoader(self.test_datasets, batch_size=32)
+        self.valid_loaders = torch.utils.data.DataLoader(self.valid_datasets, batch_size=32,shuffle=True)
+        self.test_loaders = torch.utils.data.DataLoader(self.test_datasets, batch_size=32,shuffle=True)
+
+    def define_valid_transform(self):
+        valid_transforms = transforms.Compose([transforms.Resize(256),
+                                               transforms.CenterCrop(224),
+                                               transforms.ToTensor(),
+                                               transforms.Normalize([0.485,0.456,0.406],
+                                                                    [0.229,0.224,0.225])])
+        return valid_transforms
 
     def define_test_transform(self):
         test_transforms = transforms.Compose([transforms.Resize(256),
