@@ -21,10 +21,10 @@ The task is episodic, and in order to solve the environment, the agent must get 
 The agent which used to collect banana will be trained by one of the Deep Reinformcement Learning Methodology, Deep Reinforcement Network. With proper Deep Reinforcement Network training, the agent will be able to successfully navigate, aim for more yellow banana and avoid stepping into blue banana.
 
 Before training
-![Before training](banana-no-training.gif)
+![Before training](https://github.com/phchoi/homework/blob/master/drlnd/navigation/banana-no-training.gif)
 
 After training
-![After training](banana-after-training.gif)
+![After training](https://github.com/phchoi/homework/blob/master/drlnd/navigation/banana-after-training.gif)
 
 ### Environment
 The environment contains 
@@ -37,10 +37,10 @@ The environment contains
 
 2. The Navigation notebook covers the steps on how to train the agent and test the agent to achieve the score of 13+ yellow bananas.
 
-3. The codes required to train the agent, i.e. dqn_agent.py and model.py
+3. The codes required to train the agent, i.e. dqn_agent.py(https://github.com/phchoi/homework/blob/master/drlnd/navigation/dqn_agent.py) and model.py(https://github.com/phchoi/homework/blob/master/drlnd/navigation/model.py)
 
 4. python 3.6.8 with dependency on pytorch, matplotlib, numpy .... etc.
 
 ### Getting Started
 
-Download the above banana zip file and pasted it to under the same directory of `Navigation.ipynb`, follow the instructions listed on Navigation.ipnyb.
+Download the above banana zip file and pasted it to under the same directory of `Navigation.ipynb`(https://github.com/phchoi/homework/blob/master/drlnd/navigation/Navigation.ipynb), follow the instructions listed on Navigation.ipnyb.
